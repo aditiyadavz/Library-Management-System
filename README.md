@@ -16,13 +16,12 @@ JavaScript: Dynamic functionality and DOM manipulation
 Tailwind CSS: Utility-based CSS framework for modern, responsive design
 
 Project Structure
-library-management-system/
+library-management-system
 ├── index.html              # Main HTML document
 ├── styles.css              # Custom CSS styles
 ├── scripts.js              # Main JavaScript functionality
 ├── data.js                 # Sample book data and operations
 ├── README.md               # Project documentation
-└── screenshots/            # Application screenshots
 
 Future Enhancements:-
 User authentication system
