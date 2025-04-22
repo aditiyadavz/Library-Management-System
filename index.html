@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-blue-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">📚 Library Management System</h1>
+            <div class="space-x-4">
+                <button id="dashboardBtn" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg">Dashboard</button>
+                <button id="addBookBtn" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg">Add Book</button>
+                <button id="membersBtn" class="bg-purple-600 hover:bg-purple-500 px-4 py-2 rounded-lg">Members</button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container mx-auto p-4">
+        
+        <!-- Search Bar -->
+        <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+            <div class="flex items-center">
+                <input id="searchInput" type="text" placeholder="Search books by title, author, or ISBN..." 
+                    class="flex-grow p-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="searchBtn" class="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-600">
+                    Search
+                </button>
+            </div>
+            
+            <div class="flex mt-4 space-x-4">
+                <select id="filterCategory" class="p-2 border border-gray-300 rounded-lg">
+                    <option value="">All Categories</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Non-Fiction">Non-Fiction</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="Biography">Biography</option>
+                </select>
+                
+                <select id="filterStatus" class="p-2 border border-gray-300 rounded-lg">
+                    <option value="">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="Borrowed">Borrowed</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700">Total Books</h3>
+                <p class="text-3xl font-bold text-blue-600">237</p>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700">Available</h3>
+                <p class="text-3xl font-bold text-green-600">195</p>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700">Borrowed</h3>
+                <p class="text-3xl font-bold text-yellow-600">42</p>
+            </div>
+            
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700">Members</h3>
+                <p class="text-3xl font-bold text-purple-600">128</p>
+            </div>
+        </div>
+
+        <!-- Section Title -->
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-gray-800">Book Collection</h2>
+            <div>
+                <button id="listViewBtn" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-l-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <button id="gridViewBtn" class="bg-blue-500 text-white hover:bg-blue-600 px-3 py-1 rounded-r-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Books Grid -->
+        <div id="booksContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
+            <!-- Books will be added dynamically here -->
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex justify-center mt-6">
+            <div class="inline-flex rounded-md shadow">
+                <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-l-md hover:bg-gray-300">&laquo; Previous</button>
+                <button class="px-4 py-2 bg-blue-500 text-white">1</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300">2</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-800 hover:bg-gray-300">3</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-800 rounded-r-md hover:bg-gray-300">Next &raquo;</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Book Modal -->
+    <div id="addBookModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-xl font-bold mb-4">Add New Book</h2>
+            
+            <form id="addBookForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="title">Title</label>
+                    <input type="text" id="title" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="author">Author</label>
+                    <input type="text" id="author" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="isbn">ISBN</label>
+                    <input type="text" id="isbn" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="category">Category</label>
+                    <select id="category" class="w-full p-2 border border-gray-300 rounded">
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-Fiction">Non-Fiction</option>
+                        <option value="Science">Science</option>
+                        <option value="History">History</option>
+                        <option value="Biography">Biography</option>
+                    </select>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="button" id="cancelAddBook" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded mr-2">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                        Add Book
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Book Details Modal -->
+    <div id="bookDetailsModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
+            <div id="bookDetailsContent">
+                <!-- Content will be added dynamically -->
+            </div>
+            
+            <div class="mt-6 flex justify-end">
+                <button id="closeBookDetails" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded mr-2">
+                    Close
+                </button>
+                <button id="borrowReturnBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                    Borrow
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
